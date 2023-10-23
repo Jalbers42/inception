@@ -1,0 +1,54 @@
+services:
+
+  mariadb:
+      image: mariadb
+      restart: always
+      # networks:
+      #  - mynetwork
+      environment:
+       - MYSQL_DATABASE=example
+       - MYSQL_ROOT_PASSWORD=example
+       - MYSQL_USER=example
+       - MYSQL_PASSWORD=example
+      volumes:
+       - db-data:/var/lib/mysql
+
+  wordpress:
+      # image: wordpress:5-fpm-alpine
+      build:
+        context: ./wordpress
+        dockerfile: Dockerfile
+      restart: always
+      # networks:
+      #  - mynetwork
+      environment:
+       - WORDPRESS_DB_HOST=mariadb
+       - WORDPRESS_DB_NAME=example
+       - WORDPRESS_DB_USER=example
+       - WORDPRESS_DB_PASSWORD=example
+      ports:
+       - 9000:9000
+      volumes:
+       - wordpress-data:/var/www/html
+      #  - /data/html:/var/www/html
+      depends_on:
+       - mariadb
+
+  nginx:
+      image: nginx
+      # build:
+      #   context: ./nginx
+      #   dockerfile: Dockerfile
+      # container_name: my-nginx
+      ports:
+        - "8000:80"
+      volumes:
+        - ./nginx:/etc/nginx/conf.d
+        - wordpress-data:/var/www/html
+      # links:
+      #   - wordpress
+      depends_on:
+        - wordpress
+volumes:
+  db-data:
+  wordpress-data:
