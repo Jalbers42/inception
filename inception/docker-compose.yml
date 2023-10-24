@@ -12,6 +12,8 @@ services:
        - MYSQL_PASSWORD=example
       volumes:
        - db-data:/var/lib/mysql
+      #env_file:
+      # - .env
 
   wordpress:
       # image: wordpress:5-fpm-alpine
@@ -21,18 +23,21 @@ services:
       restart: always
       # networks:
       #  - mynetwork
-      environment:
-       - WORDPRESS_DB_HOST=mariadb
-       - WORDPRESS_DB_NAME=example
-       - WORDPRESS_DB_USER=example
-       - WORDPRESS_DB_PASSWORD=example
+      #environment:
+      # - WORDPRESS_DB_HOST=mariadb
+      # - WORDPRESS_DB_NAME=example
+      # - WORDPRESS_DB_USER=example
+      # - WORDPRESS_DB_PASSWORD=example
       ports:
        - 9000:9000
       volumes:
        - wordpress-data:/var/www/html
+      # - ./wordpress/wp-config-docker:/var/www/html/wp-config.php
       #  - /data/html:/var/www/html
       depends_on:
        - mariadb
+      env_file:
+       - .env
 
   nginx:
       image: nginx
