@@ -1,21 +1,22 @@
 #FROM nginx
- # Use Alpine as the base image
- FROM alpine:3.14
+FROM alpine:3.14
 
- # Update the package repository and install Nginx
- RUN apk update && apk add nginx
+RUN apk update && apk upgrade && apk add nginx openssl
 
- # Create Nginx directories and set permissions
- RUN mkdir -p /run/nginx && \
-     mkdir -p /var/www/html && \
-     chown -R nginx:nginx /var/lib/nginx && \
-     chown -R nginx:nginx /var/www/html
+RUN mkdir -p /etc/nginx/ssl
 
- # Optionally, copy your custom Nginx configuration files if you have them
- # COPY nginx.conf /etc/nginx/nginx.conf
+RUN openssl req -x509 -nodes \
+	-out /etc/nginx/ssl/jalbers.42.fr.crt \	
+	-keyout /etc/nginx/ssl/jalbers.42.fr.key \
+	-subj "/C=GE/ST=BL/L=BL/O=42/OU=42/CN=jalbers/UID=jalbers"
 
- # Expose port 80 (HTTP)
- EXPOSE 80
+RUN mkdir -p /run/nginx && \
+    mkdir -p /var/www/html && \
+    chown -R nginx:nginx /var/lib/nginx && \
+    chown -R nginx:nginx /var/www/html
 
- # Define the entry point for the container
+COPY nginx.conf /etc/nginx/http.d/default.conf
+
+EXPOSE 443
+
  CMD ["nginx", "-g", "daemon off;"]

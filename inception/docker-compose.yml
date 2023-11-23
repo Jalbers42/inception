@@ -1,19 +1,17 @@
 services:
 
   mariadb:
-      image: mariadb
+      # image: mariadb
+      build:
+        context: ./mariadb
+        dockerfile: Dockerfile
       restart: always
       # networks:
       #  - mynetwork
-      environment:
-       - MYSQL_DATABASE=example
-       - MYSQL_ROOT_PASSWORD=example
-       - MYSQL_USER=example
-       - MYSQL_PASSWORD=example
       volumes:
        - db-data:/var/lib/mysql
-      #env_file:
-      # - .env
+      env_file:
+      - .env
 
   wordpress:
       # image: wordpress:5-fpm-alpine
@@ -40,13 +38,13 @@ services:
        - .env
 
   nginx:
-      image: nginx
-      # build:
-      #   context: ./nginx
-      #   dockerfile: Dockerfile
-      # container_name: my-nginx
+      # image: nginx
+      build:
+        context: ./nginx
+        dockerfile: Dockerfile
+      container_name: my-nginx
       ports:
-        - "8000:80"
+        - "443:443"
       volumes:
         - ./nginx:/etc/nginx/conf.d
         - wordpress-data:/var/www/html
