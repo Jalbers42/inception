@@ -43,7 +43,6 @@ services:
       build:
         context: ./nginx
         dockerfile: Dockerfile
-      restart: always
       container_name: my-nginx
       ports:
         - "443:443"
