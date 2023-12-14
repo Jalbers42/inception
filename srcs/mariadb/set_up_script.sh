@@ -8,8 +8,19 @@ fi
 if [ ! -d "/var/lib/mysql/mysql" ]; then
 	chown -R mysql:mysql /var/lib/mysql
 	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+	
+	
     	# Run init.sql from the existing file
+    	
+    	sed -i "s/db_name/$WORDPRESS_DB_NAME/g" wp.sql
+    	sed -i "s/db_user/$WORDPRESS_DB_USER/g" wp.sql
+    	sed -i "s/db_pw/$WORDPRESS_DB_PASSWORD/g" wp.sql
+    	sed -i "s/sql_root_pw/$MYSQL_ROOT_PASSWORD/g" wp.sql
+    	
     	/usr/bin/mysqld --user=mysql --bootstrap < "wp.sql"
+    	
+    	
+    	
 fi
 
 # for remote conections
