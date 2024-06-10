@@ -1,7 +1,6 @@
 services:
 
   mariadb:
-      #image: mariadb
       build:
         context: ./mariadb
         dockerfile: Dockerfile
@@ -14,7 +13,6 @@ services:
       - .env
 
   wordpress:
-      # image: wordpress:5-fpm-alpine
       build:
         context: ./wordpress
         dockerfile: Dockerfile
