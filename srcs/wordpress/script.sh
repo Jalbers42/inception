@@ -16,6 +16,9 @@ echo "Before User Creation"
 wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
 echo "After User Creation"
 
+wp theme install bedrock --allow-root
+wp theme activate bedrock --allow-root
+
 sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 mkdir /run/php
 

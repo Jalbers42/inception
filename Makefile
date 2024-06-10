@@ -7,7 +7,7 @@ up:
 down:
 	cd srcs && sudo docker compose down
 	
-down_with_volume:
+down_with_vol:
 	cd srcs && sudo docker compose down --volumes
 
 .PHONY: build up down

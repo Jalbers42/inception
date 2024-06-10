@@ -55,7 +55,15 @@ services:
         - back
 volumes:
   db-data:
+    driver_opts:
+      type: none
+      device: /home/jalbers/data/wordpress-data
+      o: bind
   wordpress-data:
+    driver_opts:
+      type: none
+      device: /home/jalbers/data/db-data
+      o: bind
   
 networks:
   front:
