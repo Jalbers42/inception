@@ -15,8 +15,8 @@ RUN mkdir -p /run/nginx && \
     chown -R nginx:nginx /var/lib/nginx && \
     chown -R nginx:nginx /var/www/html
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY default.conf /etc/nginx/http.d/default.conf
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/default.conf /etc/nginx/http.d/default.conf
 
 EXPOSE 443
 
