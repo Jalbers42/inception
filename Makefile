@@ -7,7 +7,9 @@ up:
 down:
 	cd srcs && sudo docker compose down
 	
-down_with_vol:
-	cd srcs && sudo docker compose down --volumes
+down_vol:
+	cd srcs && sudo docker compose down --volumes && \
+	sudo rm -rf /home/jalbers/data/wordpress-data/* && \
+	sudo rm -rf /home/jalbers/data/db-data/* \
 
 .PHONY: build up down

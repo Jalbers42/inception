@@ -1,5 +1,5 @@
 #FROM nginx
-FROM alpine:3.14
+FROM alpine:3.19
 
 RUN apk update && apk upgrade && apk add nginx openssl
 
@@ -15,7 +15,8 @@ RUN mkdir -p /run/nginx && \
     chown -R nginx:nginx /var/lib/nginx && \
     chown -R nginx:nginx /var/www/html
 
-COPY nginx.conf /etc/nginx/http.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/http.d/default.conf
 
 EXPOSE 443
 

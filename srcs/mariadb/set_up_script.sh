@@ -13,8 +13,10 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     	# Run init.sql from the existing file
     	
     	sed -i "s/db_name/$WORDPRESS_DB_NAME/g" wp.sql
-    	sed -i "s/db_user/$WORDPRESS_DB_USER/g" wp.sql
-    	sed -i "s/db_pw/$WORDPRESS_DB_PASSWORD/g" wp.sql
+    	sed -i "s/db_user1/$WORDPRESS_DB_USER/g" wp.sql
+    	sed -i "s/db_pw1/$WORDPRESS_DB_PASSWORD/g" wp.sql
+    	sed -i "s/db_user2/$MQSQL_USER/g" wp.sql
+    	sed -i "s/db_pw2/$MYSQL_PASSWORD/g" wp.sql
     	sed -i "s/sql_root_pw/$MYSQL_ROOT_PASSWORD/g" wp.sql
     	
     	/usr/bin/mysqld --user=mysql --bootstrap < "wp.sql"
